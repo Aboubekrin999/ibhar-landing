@@ -1,21 +1,25 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Tajawal } from "next/font/google";
+import { Geist_Mono, Cairo, Montserrat } from "next/font/google";
+import { LocaleDirSetter } from "@/components/LocaleDirSetter";
 import "./globals.css";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
 
-const tajawal = Tajawal({
-  variable: "--font-tajawal",
-  subsets: ["latin", "arabic"],
-  weight: ["400", "500", "700", "800"],
+const cairo = Cairo({
+  variable: "--font-cairo",
+  subsets: ["arabic", "latin"],
+  weight: ["300", "400", "600", "700"],
+  display: "swap",
+});
+
+const montserrat = Montserrat({
+  variable: "--font-montserrat",
+  subsets: ["latin"],
+  weight: ["300", "400", "600", "700"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -29,10 +33,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html
+      lang="en"
+      dir="ltr"
+      className={`${cairo.variable} ${montserrat.variable}`}
+      suppressHydrationWarning
+    >
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${tajawal.variable} antialiased font-sans`}
+        className={`${geistMono.variable} font-body antialiased`}
+        suppressHydrationWarning
       >
+        <LocaleDirSetter />
         {children}
       </body>
     </html>

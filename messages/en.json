@@ -1,0 +1,119 @@
+{
+  "nav": {
+    "home": "Home",
+    "homeAria": "Go to home page",
+    "about": "About",
+    "aboutAria": "Learn about Ibhar",
+    "services": "Services",
+    "servicesAria": "View yacht registration services",
+    "contact": "Contact",
+    "contactAria": "Get in touch with Ibhar"
+  },
+  "hero": {
+    "overline": "Marine vessel registration",
+    "title": "Ibhar",
+    "tagline": "Government services for yacht and marine vessel registration in one centre.",
+    "description": "The first centre under Emirati management to offer licensing, inspection, insurance and marina services in one place. Member of Mohammed bin Rashid Establishment for SME Development.",
+    "ctaContact": "Contact us",
+    "ctaServices": "Our services",
+    "heroImageAlt": "Luxury yacht at sea - Ibhar registration services Dubai"
+  },
+  "about": {
+    "overline": "About us",
+    "heading": "Get to know us",
+    "p1": "Since 2018, Ibhar Registration has been an Emirati-managed centre and a member of the Mohammed bin Rashid Establishment for Small and Medium Enterprises Development.",
+    "p2": "Ibhar Registration Centre is the first centre to offer government services for registering marine vessels—national and foreign leisure ships—with licensing, inspection, insurance and a wide range of services under one roof.",
+    "p3": "What sets us apart: convenient locations and working hours tailored to our clients."
+  },
+  "vision": {
+    "overline": "Our direction",
+    "heading": "Vision & values",
+    "visionLabel": "Vision",
+    "visionText": "To become the leading centre in the field of marine services.",
+    "missionLabel": "Mission",
+    "missionText": "To fulfil the requirements of marine craft owners and provide all services at one-stop registration desks.",
+    "valuesLabel": "Our values",
+    "values": {
+      "trust": "Trust",
+      "quality": "Quality",
+      "efficiency": "Efficiency",
+      "excellence": "Excellence",
+      "speed": "Speed",
+      "collaboration": "Collaboration"
+    },
+    "target": "We serve {individuals} and {companies}.",
+    "individuals": "individuals",
+    "companies": "companies"
+  },
+  "services": {
+    "overline": "What we offer",
+    "heading": "Marine services in one centre",
+    "intro": "Ibhar Registration offers a range of services related to yacht registration, insurance and marina services.",
+    "cards": {
+      "registration": {
+        "title": "Boat & yacht registration and inspection",
+        "items": [
+          "Boat and yacht new registration",
+          "Boat and yacht license renewal",
+          "Bill of sale and transfer of ownership",
+          "Normal cancellation",
+          "Cancellation with export",
+          "Boat and yacht technical inspection",
+          "Technical amendment",
+          "Non-technical amendment"
+        ]
+      },
+      "captain": {
+        "title": "Captain license services",
+        "items": [
+          "Captain license registration",
+          "Captain license renewal",
+          "Captain license amendment",
+          "Captain license cancellation"
+        ]
+      },
+      "permits": {
+        "title": "Permits for foreign vessels",
+        "items": [
+          "Full insurance and third-party liability insurance",
+          "Shipping broker",
+          "Maritime cargo shipping services",
+          "Yacht supply contracts",
+          "Maritime shipping line agent"
+        ]
+      },
+      "insurance": {
+        "title": "Insurance services",
+        "items": [
+          "Comprehensive hull insurance",
+          "Third-party liability cover"
+        ]
+      }
+    }
+  },
+  "locations": {
+    "overline": "Where we operate",
+    "heading": "Find us across the UAE",
+    "items": [
+      "Dubai Marina Yacht Club — Berth G-28, floating kiosk",
+      "Mina Rashid Marine — Cruise and commercial harbour",
+      "JA Marina — Jebel Ali",
+      "Dubai Creek Golf & Yacht Club — Creek-side marina",
+      "Dubai Harbour Marinas — Dubai Harbour",
+      "Yas Marina Abu Dhabi — Offices 1–6"
+    ]
+  },
+  "contact": {
+    "overline": "Operating hours",
+    "heading": "Contact & hours",
+    "intro": "We operate extended hours across our marina locations to match your schedule.",
+    "hoursTitle": "Our operating hours",
+    "hoursWeek": "08:00 AM – 05:00 PM, Monday to Saturday",
+    "hoursClosed": "Closed on Sunday",
+    "note": "Visit us at any of our locations or reach out to our team for vessel registration support."
+  },
+  "locale": {
+    "en": "English",
+    "ar": "العربية"
+  }
+}

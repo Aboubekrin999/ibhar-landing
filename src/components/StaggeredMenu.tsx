@@ -1,13 +1,16 @@
 "use client";
 
-import React, {
-  useCallback,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { useCallback, useLayoutEffect, useRef, useState } from "react";
+import Image from "next/image";
 import { gsap } from "gsap";
+import { Github, Linkedin, Twitter } from "lucide-react";
 import "./StaggeredMenu.css";
+
+const SOCIAL_ICONS: Record<string, React.ComponentType<{ className?: string; size?: number }>> = {
+  Twitter,
+  GitHub: Github,
+  LinkedIn: Linkedin,
+};
 
 export interface StaggeredMenuItem {
   label: string;
@@ -37,6 +40,8 @@ export interface StaggeredMenuProps {
   onMenuOpen?: () => void;
   onMenuClose?: () => void;
   isFixed?: boolean;
+  /** Renders in the navbar next to the menu toggle (e.g. language switcher). */
+  headerRight?: React.ReactNode;
 }
 
 export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
@@ -56,6 +61,7 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
   closeOnClickAway = true,
   onMenuOpen,
   onMenuClose,
+  headerRight,
 }: StaggeredMenuProps) => {
   const [open, setOpen] = useState(false);
   const openRef = useRef(false);
@@ -234,7 +240,7 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
 
     openTlRef.current = tl;
     return tl;
-  }, [position]);
+  }, []);
 
   const playOpen = useCallback(() => {
     if (busyRef.current) return;
@@ -452,8 +458,9 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
     >
       <div ref={preLayersRef} className="sm-prelayers" aria-hidden="true">
         {(() => {
-          const raw = colors && colors.length ? colors.slice(0, 4) : ["#1e1e22", "#35353c"];
-          let arr = [...raw];
+          const raw =
+            colors && colors.length ? colors.slice(0, 4) : ["#1e1e22", "#35353c"];
+          const arr = [...raw];
           if (arr.length >= 3) {
             const mid = Math.floor(arr.length / 2);
             arr.splice(mid, 1);
@@ -463,44 +470,48 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
           ));
         })()}
       </div>
-      <header className="staggered-menu-header" aria-label="Main navigation header">
+      <header className="staggered-menu-header sm-header-liquid-glass" aria-label="Main navigation header">
         <div className="sm-logo" aria-label="Logo">
-          <img
+          <Image
             src={logoUrl}
             alt="Ibhar"
             className="sm-logo-img"
             draggable={false}
             width={110}
             height={24}
+            priority
           />
         </div>
-        <button
-          ref={toggleBtnRef}
-          className="sm-toggle"
-          aria-label={open ? "Close menu" : "Open menu"}
-          aria-expanded={open}
-          aria-controls="staggered-menu-panel"
-          onClick={toggleMenu}
-          type="button"
-        >
-          <span
-            ref={textWrapRef}
-            className="sm-toggle-textWrap"
-            aria-hidden="true"
+        <div className="sm-header-right">
+          {headerRight}
+          <button
+            ref={toggleBtnRef}
+            className="sm-toggle"
+            aria-label={open ? "Close menu" : "Open menu"}
+            aria-expanded={open}
+            aria-controls="staggered-menu-panel"
+            onClick={toggleMenu}
+            type="button"
           >
-            <span ref={textInnerRef} className="sm-toggle-textInner">
-              {textLines.map((l, i) => (
-                <span className="sm-toggle-line" key={l + i}>
-                  {l}
-                </span>
-              ))}
+            <span
+              ref={textWrapRef}
+              className="sm-toggle-textWrap"
+              aria-hidden="true"
+            >
+              <span ref={textInnerRef} className="sm-toggle-textInner">
+                {textLines.map((l, i) => (
+                  <span className="sm-toggle-line" key={l + i}>
+                    {l}
+                  </span>
+                ))}
+              </span>
             </span>
-          </span>
-          <span ref={iconRef} className="sm-icon" aria-hidden="true">
-            <span ref={plusHRef} className="sm-icon-line" />
-            <span ref={plusVRef} className="sm-icon-line sm-icon-line-v" />
-          </span>
-        </button>
+            <span ref={iconRef} className="sm-icon" aria-hidden="true">
+              <span ref={plusHRef} className="sm-icon-line" />
+              <span ref={plusVRef} className="sm-icon-line sm-icon-line-v" />
+            </span>
+          </button>
+        </div>
       </header>
 
       <aside
@@ -540,18 +551,25 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
             <div className="sm-socials" aria-label="Social links">
               <h3 className="sm-socials-title">Socials</h3>
               <ul className="sm-socials-list" role="list">
-                {socialItems.map((s, i) => (
-                  <li key={s.label + i} className="sm-socials-item">
-                    <a
-                      href={s.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="sm-socials-link"
-                    >
-                      {s.label}
-                    </a>
-                  </li>
-                ))}
+                {socialItems.map((s, i) => {
+                  const Icon = SOCIAL_ICONS[s.label];
+                  return (
+                    <li key={s.label + i} className="sm-socials-item">
+                      <a
+                        href={s.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="sm-socials-link"
+                        aria-label={s.label}
+                      >
+                        {Icon ? (
+                          <Icon className="sm-socials-icon" size={20} aria-hidden />
+                        ) : null}
+                        <span className="sm-socials-label">{s.label}</span>
+                      </a>
+                    </li>
+                  );
+                })}
               </ul>
             </div>
           )}
