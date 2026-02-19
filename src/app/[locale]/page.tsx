@@ -7,12 +7,15 @@ import StaggeredMenu, {
 } from "@/components/StaggeredMenu";
 import { LocaleSwitcher } from "@/components/LocaleSwitcher";
 import { Button } from "@/components/ui/button";
+import { Link } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
 
 const HERO_IMAGE_URL =
   "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=800&q=80";
 
 type Props = { params: Promise<{ locale: string }> };
+
+const normalizePhone = (value: string) => value.replace(/[^\d+]/g, "");
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -29,6 +32,7 @@ export default async function HomePage({ params }: Props) {
   const tLocations = await getTranslations("locations");
   const tServices = await getTranslations("services");
   const tContact = await getTranslations("contact");
+  const tFooter = await getTranslations("footer");
 
   const base = `/${locale}`;
   const menuItems: StaggeredMenuItem[] = [
@@ -46,11 +50,24 @@ export default async function HomePage({ params }: Props) {
     },
   ];
 
-  const socialItems: StaggeredMenuSocialItem[] = [
-    { label: "Twitter", link: "https://twitter.com" },
-    { label: "GitHub", link: "https://github.com" },
-    { label: "LinkedIn", link: "https://linkedin.com" },
-  ];
+  const socialItems = [
+    { label: "X", link: process.env.NEXT_PUBLIC_SOCIAL_X_URL },
+    { label: "LinkedIn", link: process.env.NEXT_PUBLIC_SOCIAL_LINKEDIN_URL },
+    { label: "Instagram", link: process.env.NEXT_PUBLIC_SOCIAL_INSTAGRAM_URL },
+  ]
+    .filter(
+      (item): item is StaggeredMenuSocialItem =>
+        typeof item.link === "string" && item.link.length > 0,
+    )
+    .map((item) => ({ label: item.label, link: item.link }));
+
+  const contactEmail = process.env.NEXT_PUBLIC_CONTACT_EMAIL;
+  const contactPhone = process.env.NEXT_PUBLIC_CONTACT_PHONE;
+  const contactWhatsapp = process.env.NEXT_PUBLIC_CONTACT_WHATSAPP;
+  const mapsUrl = process.env.NEXT_PUBLIC_CONTACT_MAPS_URL;
+  const whatsappLink = contactWhatsapp
+    ? `https://wa.me/${normalizePhone(contactWhatsapp)}`
+    : null;
 
   return (
     <div className="min-h-screen bg-background">
@@ -348,9 +365,52 @@ export default async function HomePage({ params }: Props) {
             <p className="font-tajawal mt-4 text-[15px] leading-relaxed text-white/80 md:text-base">
               {tContact("intro")}
             </p>
-            <p className="font-tajawal mt-6 text-[15px] leading-relaxed text-white/80 md:text-base">
-              {tContact("note")}
-            </p>
+              <p className="font-tajawal mt-6 text-[15px] leading-relaxed text-white/80 md:text-base">
+                {tContact("note")}
+              </p>
+              <div className="mt-6 flex flex-wrap gap-3">
+                {contactPhone ? (
+                  <Button
+                    asChild
+                    className="font-tajawal rounded-lg bg-white px-5 text-zinc-900 hover:bg-white/90"
+                  >
+                    <a href={`tel:${normalizePhone(contactPhone)}`}>
+                      {tContact("actions.call")}
+                    </a>
+                  </Button>
+                ) : null}
+                {contactEmail ? (
+                  <Button
+                    asChild
+                    variant="outline"
+                    className="font-tajawal rounded-lg border-white/30 bg-transparent px-5 text-white hover:bg-white/10 hover:text-white"
+                  >
+                    <a href={`mailto:${contactEmail}`}>{tContact("actions.email")}</a>
+                  </Button>
+                ) : null}
+                {whatsappLink ? (
+                  <Button
+                    asChild
+                    variant="outline"
+                    className="font-tajawal rounded-lg border-white/30 bg-transparent px-5 text-white hover:bg-white/10 hover:text-white"
+                  >
+                    <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
+                      {tContact("actions.whatsapp")}
+                    </a>
+                  </Button>
+                ) : null}
+                {mapsUrl ? (
+                  <Button
+                    asChild
+                    variant="outline"
+                    className="font-tajawal rounded-lg border-white/30 bg-transparent px-5 text-white hover:bg-white/10 hover:text-white"
+                  >
+                    <a href={mapsUrl} target="_blank" rel="noopener noreferrer">
+                      {tContact("actions.map")}
+                    </a>
+                  </Button>
+                ) : null}
+              </div>
           </div>
 
           <div className="max-w-sm flex-1">
@@ -365,6 +425,14 @@ export default async function HomePage({ params }: Props) {
                 {tContact("hoursClosed")}
               </p>
             </div>
+            <nav className="mt-5 flex flex-wrap gap-4 text-sm text-white/70">
+              <Link href="/privacy" className="font-tajawal underline-offset-4 hover:underline">
+                {tFooter("privacy")}
+              </Link>
+              <Link href="/terms" className="font-tajawal underline-offset-4 hover:underline">
+                {tFooter("terms")}
+              </Link>
+            </nav>
           </div>
         </div>
       </section>

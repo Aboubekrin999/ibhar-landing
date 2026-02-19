@@ -110,7 +110,17 @@
     "hoursTitle": "Our operating hours",
     "hoursWeek": "08:00 AM – 05:00 PM, Monday to Saturday",
     "hoursClosed": "Closed on Sunday",
-    "note": "Visit us at any of our locations or reach out to our team for vessel registration support."
+    "note": "Visit us at any of our locations or reach out to our team for vessel registration support.",
+    "actions": {
+      "call": "Call us",
+      "email": "Email us",
+      "whatsapp": "WhatsApp",
+      "map": "Get directions"
+    }
+  },
+  "footer": {
+    "privacy": "Privacy policy",
+    "terms": "Terms & conditions"
   },
   "locale": {
     "en": "English",

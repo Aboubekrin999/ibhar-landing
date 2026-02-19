@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Geist_Mono, Cairo, Montserrat } from "next/font/google";
-import { LocaleDirSetter } from "@/components/LocaleDirSetter";
+import { getLocale } from "next-intl/server";
 import "./globals.css";
 
 const geistMono = Geist_Mono({
@@ -23,27 +23,31 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-  title: "Ibhar | Yacht Registration Services Dubai",
-  description: "Ibhar — yacht registration services in Dubai. Expert vessel registration and maritime compliance.",
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://ibhar.ae"),
+  title: {
+    default: "Ibhar | Yacht Registration Services Dubai",
+    template: "%s | Ibhar",
+  },
+  description:
+    "Ibhar — yacht registration services in Dubai. Expert vessel registration and maritime compliance.",
+  applicationName: "Ibhar",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const locale = await getLocale();
+  const isArabic = locale === "ar";
+
   return (
     <html
-      lang="en"
-      dir="ltr"
+      lang={locale}
+      dir={isArabic ? "rtl" : "ltr"}
       className={`${cairo.variable} ${montserrat.variable}`}
-      suppressHydrationWarning
     >
-      <body
-        className={`${geistMono.variable} font-body antialiased`}
-        suppressHydrationWarning
-      >
-        <LocaleDirSetter />
+      <body className={`${geistMono.variable} font-body antialiased`}>
         {children}
       </body>
     </html>

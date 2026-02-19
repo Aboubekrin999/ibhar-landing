@@ -3,13 +3,15 @@
 import React, { useCallback, useLayoutEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { gsap } from "gsap";
-import { Github, Linkedin, Twitter } from "lucide-react";
+import { Github, Instagram, Linkedin, Twitter } from "lucide-react";
 import "./StaggeredMenu.css";
 
 const SOCIAL_ICONS: Record<string, React.ComponentType<{ className?: string; size?: number }>> = {
   Twitter,
+  X: Twitter,
   GitHub: Github,
   LinkedIn: Linkedin,
+  Instagram,
 };
 
 export interface StaggeredMenuItem {
@@ -580,4 +582,3 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
 };
 
 export default StaggeredMenu;
-
